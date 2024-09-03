@@ -1,10 +1,5 @@
-package example.com.app.domain.entity
+package utn.methodology.domain.entities
 
-import example.com.app.domain.events.DomainEvent
-import example.com.app.domain.events.ShippingCreated
-import example.com.app.domain.events.ShippingHasNeedPrepared
-import example.com.app.domain.events.ShippingReadyToDeliver
-import example.com.app.domain.valueObjects.*
 import java.util.UUID
 
 data class User(
