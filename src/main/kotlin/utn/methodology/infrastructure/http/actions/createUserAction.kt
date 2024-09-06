@@ -1,9 +1,9 @@
 package example.com.infrastructure.http.actions
 
-import example.com.application.commands.CreateUserCommand
-import example.com.application.commandhandlers.CreateUserHandler
+import utn.methodology.application.commands.CreateUserCommand
+import utn.methodology.application.commandhandlers.CreateUserHandler
 
-class CreateUserAction(
+class createUserAction(
     private val handler: CreateUserHandler
 ) {
 
