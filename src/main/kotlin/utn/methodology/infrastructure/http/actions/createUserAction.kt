@@ -1,4 +1,4 @@
-package example.com.infrastructure.http.actions
+package utn.methodology.infrastructure.http.actions
 
 import utn.methodology.application.commands.CreateUserCommand
 import utn.methodology.application.commandhandlers.CreateUserHandler
