@@ -5,6 +5,7 @@ import io.ktor.http.*
 import io.ktor.serialization.jackson.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
+import io.ktor.server.netty.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.statuspages.StatusPages
@@ -14,13 +15,13 @@ import org.slf4j.LoggerFactory
 import utn.methodology.infrastructure.persistence.configureDatabases
 
 fun main(args: Array<String>) {
-    io.ktor.server.netty.EngineMain.main(args)
+    EngineMain.main(args)
 }
 
 fun Application.errorHandler() {
     install(StatusPages) {
         exception<Throwable> { call, cause ->
-            utn.methodology.logError(call, cause)
+            logError(call, cause)
 
             if (cause is NotFoundException) {
                 call.respond(HttpStatusCode.NotFound, mapOf("error" to cause.message))
