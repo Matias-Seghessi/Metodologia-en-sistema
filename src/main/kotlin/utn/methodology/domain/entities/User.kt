@@ -20,3 +20,11 @@ data class User(
         )
     }
 }
+
+data class SearchUserQuery(
+    var uuid: String,
+    var nombre: String,
+    var username: String,
+    var email: String,
+    var contraseñia: String
+)
