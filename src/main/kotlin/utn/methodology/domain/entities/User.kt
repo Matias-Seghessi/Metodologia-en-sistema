@@ -22,7 +22,7 @@ data class User(
 }
 
 data class SearchUserQuery(
-    var uuid: String,
+    var uuid: UUID = UUID.randomUUID(),
     var nombre: String,
     var username: String,
     var email: String,
