@@ -1,4 +1,4 @@
-package utn.methodology.domain.entities.User;
+package utn.methodology.domain.entities.post;
 
 import utn.Application.commands.CreateUserCommand;
 import utn.Application.commandhandlers.CreateUserHandler;
