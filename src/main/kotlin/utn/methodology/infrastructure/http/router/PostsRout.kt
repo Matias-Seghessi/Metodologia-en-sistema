@@ -9,13 +9,11 @@ import utn.methodology.infrastructure.http.actions.FindUserByUsernameAction
 
 fun Application.postRout() {
     val mongoDatabase = Databases();
-    //crear un nuevo repositorio para post
-    val userMongoUserRepository = MongoUserRepository(Databases);
-    
-        //crear un nuevo action para post
-        //crear un handler para posts
-    val CreateUserAction = CreateUserAction(CreateUserHandler(userMongoUserRepository));
-    val findUserByUsernameAction = FindUserByUsernameAction(FindUserByUsernameHandler(userMongoUserRepository))
+
+    val PostMongoUserRepository = MongoPostRepository(Databases);
+
+    val CreatePostAction = CreatePostAction(CreatePostHandler(PostMongoUserRepository));
+    val findUserByUsernameAction = FindUserByUsernameAction(FindUserByUsernameHandler(PostMongoUserRepository))
     
     routing {
          
