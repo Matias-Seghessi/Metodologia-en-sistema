@@ -3,7 +3,7 @@ import kotlin.math.E
 
 
 @Serializable()
-data class CreateUserCommand(
+data class gCreateUserCommand(
     val nombre: String,
     val userName: String,
     val email: String,
