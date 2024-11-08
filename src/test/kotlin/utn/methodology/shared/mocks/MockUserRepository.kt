@@ -1,31 +1,30 @@
 package utn.methodology.shared.mocks
 
 import utn.methodology.domain.contracts.UserRepository
-import utn.methodology.domain.entities.User
+import utn.methodology.domain.entities.User.User
 
 class MockUserRepository : UserRepository {
 
-    var users: Array<User> = emptyArray()
+    private var users: MutableList<User> = mutableListOf()
 
     override fun save(user: User) {
-        users = users.filter { it.getId() != user.getId() }.toTypedArray()
-
-        users = users.plus(user)
+        users.removeIf { it.uuid == user.uuid }
+        users.add(user)
     }
 
     override fun findOne(id: String): User? {
-        return users.find { it.getId() == id }
+        return users.find { it.uuid.toString() == id }
     }
 
     override fun delete(user: User) {
-        users = users.filter { it.getId() != user.getId() }.toTypedArray()
+        users.removeIf { it.uuid == user.uuid }
     }
 
     fun clean() {
-        users = emptyArray();
+        users = mutableListOf()
     }
 
     fun findByUsername(username: String): User? {
-        return users.find { it.getUsername() == username }
+        return users.find { it.username == username }
     }
 }

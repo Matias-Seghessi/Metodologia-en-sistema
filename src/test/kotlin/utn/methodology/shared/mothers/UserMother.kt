@@ -1,6 +1,6 @@
 package utn.methodology.shared.mothers
 
-import utn.methodology.domain.entities.User
+import utn.methodology.domain.entities.User.User
 import io.github.serpro69.kfaker.Faker
 import java.util.UUID
 
@@ -10,13 +10,13 @@ class UserMother {
         val faker = Faker()
 
         fun random(): User {
-            return User.fromPrimitives(
+            return User.toPrimitives(
                 mapOf(
                     "uuid" to UUID.randomUUID().toString(),
                     "nombre" to faker.southPark.characters(),
                     "username" to faker.southPark.characters(),
                     "email" to faker.internet.email(),
-                    "contraseñia" to faker.password(),
+                    "contrasenia" to faker.password(),
                     "followers" to emptyList<String>(),
                     "follows" to emptyList<String>()
                 )

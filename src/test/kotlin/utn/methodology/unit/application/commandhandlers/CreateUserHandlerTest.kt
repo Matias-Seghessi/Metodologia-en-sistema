@@ -11,9 +11,8 @@ import kotlin.test.assertFailsWith
 
 class CreateUserHandlerTest {
 
-    val mockUserRepository = MockUserRepository()
-
-    var sut: CreateUserHandler = CreateUserHandler(mockUserRepository)
+    private val mockUserRepository = MockUserRepository()
+    private var sut: CreateUserHandler = CreateUserHandler(mockUserRepository)
 
     @BeforeTest
     fun beforeEach() {
@@ -21,36 +20,42 @@ class CreateUserHandlerTest {
     }
 
     @Test
-    fun create_user_should_returns_201() {
-        // arrange
-        val nombre = UserMother.faker.southPark.characters();
-        val username = UserMother.faker.southPark.characters();
+    fun create_user_should_return_201() {
+        // Arrange
+        val nombre = UserMother.faker.southPark.characters()
+        val username = UserMother.faker.southPark.characters()
+        val email = UserMother.faker.internet.email()
+        val password = UserMother.faker.password()
 
         val command = CreateUserCommand(
             nombre,
             username,
-            UserMother.faker.internet.email(),
-            UserMother.faker.password()
+            email,
+            password
         )
 
-        // act
+        // Act
         sut.handle(command)
 
-        //assertion
+        // Assert
         val user = mockUserRepository.findByUsername(username)
-
         assertNotNull(user)
-        assert(user.getEmail() == command.email)
+        assert(user.email == command.email)
     }
 
     @Test
-    fun create_user_should_returns_400() {
+    fun create_user_should_return_400() {
         // Arrange
+        val invalidName = ""
         val invalidUsername = "" // Nombre de usuario inválido (vacío)
+        val invalidEmail = ""
+        val invalidPassword = ""
 
         val command = CreateUserCommand(
+            invalidName,
             invalidUsername,
-            UserMother.faker.internet.email(),
+            invalidEmail,
+            invalidPassword
         )
 
         // Act & Assert

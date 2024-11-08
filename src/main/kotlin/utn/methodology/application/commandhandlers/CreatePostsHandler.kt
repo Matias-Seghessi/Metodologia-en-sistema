@@ -12,7 +12,7 @@ class CreatePostHandler(
 ){
     fun handle(command: CreatePostCommand) {
         val post = Post(
-            id = UUID.randomUUID(),
+            userId = UUID.randomUUID().toString(),
             titulo = command.titulo,
             contenido = command.contenido,
             autor = command.autor,

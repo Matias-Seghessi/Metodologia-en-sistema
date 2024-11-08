@@ -1,6 +1,8 @@
 package utn.methodology.domain.entities.Post
 data class Post(
     val userId: String,
-    val message: String,
-    val createdAt: Long = System.currentTimeMillis()
+    val titulo: String,
+    val contenido: String,
+    val autor: String,
+    val fechaCreacion: Long = System.currentTimeMillis()
 )
