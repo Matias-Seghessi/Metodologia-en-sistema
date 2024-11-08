@@ -9,6 +9,13 @@ data class User(
     var username: String,
     var email: String,
     var contraseñia: String
+
+
+    // Relaciones de seguimiento
+    var seguidores: MutableSet<User> = mutableSetOf(),  // Usuarios que siguen a este usuario
+    var seguidos: MutableSet<User> = mutableSetOf()     // Usuarios que este usuario sigue
+
+
 ){
     fun toPrimitives(): Map<String, Any> {
         return mapOf(
