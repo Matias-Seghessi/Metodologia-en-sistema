@@ -1,9 +1,9 @@
 package utn.methodology.domain.entities.Post;
 
-import utn.Application.commands.CreateUserCommand;
-import utn.Application.commandhandlers.CreateUserHandler;
-import utn.Application.infrastructure.http.actions.CreateUserAction;
-import utn.Application.infrastructure.persistence.MongoUserRepository;
+import utn.Application.commands.CreatePostCommand;
+import utn.Application.commandhandlers.CreatePostHandler;
+import utn.Application.infrastructure.http.actions.CreatePostAction;
+import utn.Application.infrastructure.persistence.MongoPostRepository;
 import utn.Application.infrastructure.persistence.Databases;
 import utn.methodology.infrastructure.http.actions.FindUserByUsernameAction
 
