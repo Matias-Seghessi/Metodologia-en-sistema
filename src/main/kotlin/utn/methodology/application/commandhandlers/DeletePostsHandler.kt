@@ -6,11 +6,11 @@ import utn.methodology.application.commands.DeletePostCommand
 
 import java.util.UUID
 
-class DeletePostCommand(
+class DeletePostsHandler(
     private val PostRepository: MongoPostRepository
 ) {
 
-    fun handle(command: DeletePostCommand) {
+    fun handle(command: DeletePostsHandler) {
 
         val post = PostRepository.findOne(command.id)
 

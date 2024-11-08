@@ -3,6 +3,11 @@ package utn.methodology.domain.entities.Post;
 import utn.Application.commands.CreatePostCommand;
 import utn.Application.commandhandlers.CreatePostHandler;
 import utn.Application.infrastructure.http.actions.CreatePostAction;
+//----------------------------------------------
+import utn.Application.Commands.DeletePostCommand;
+import utn.Application.Commandhandlers.DeletePostsHandler
+import utn.Application.infrastructure.http.actions.DeletePostAction;
+//----------------------------------------------
 import utn.Application.infrastructure.persistence.MongoPostRepository;
 import utn.Application.infrastructure.persistence.Databases;
 import utn.methodology.infrastructure.http.actions.FindUserByUsernameAction
@@ -13,8 +18,8 @@ fun Application.postRout() {
     val PostMongoUserRepository = MongoPostRepository(Databases);
 
     val CreatePostAction = CreatePostAction(CreatePostHandler(PostMongoUserRepository));
-    val findUserByUsernameAction = FindUserByUsernameAction(FindUserByUsernameHandler(PostMongoUserRepository))
-    
+    val FindPostsByPostsnameAction = FindPostsByPostsnameAction(FindPostsByPostsnameHandler(PostMongoUserRepository))
+    val deletePostAction = DeletePostAction(DeletePostsHandler(PostMongoUserRepository))
     routing {
          
         post("/posts") {
@@ -27,6 +32,15 @@ fun Application.postRout() {
             
             val post = Post(userId = postRequest.userId, message = postRequest.message)
             call.respond(HttpStatusCode.Created, post)
+        }
+
+        delete("/posts/{id}") {
+
+            val query = DeletePostCommand(call.Parameters["id"].toString())
+
+            deletePostAction.execute(query)
+
+            call.respond(HttpStatusCode.NoContent)
         }
 
     }
