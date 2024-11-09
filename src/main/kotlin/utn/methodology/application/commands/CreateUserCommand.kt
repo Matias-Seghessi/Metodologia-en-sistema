@@ -1,3 +1,5 @@
+package utn.methodology.application.commands
+
 import kotlinx.serialization.Serializable
 import kotlin.math.E
 
