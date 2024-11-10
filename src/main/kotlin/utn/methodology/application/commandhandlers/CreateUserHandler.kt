@@ -1,13 +1,14 @@
 package utn.methodology.application.commandhandlers
 
-import utn.methodology.domain.entities.User.User
+import utn.methodology.domain.entities.User
 import utn.methodology.application.commands.CreateUserCommand
+import utn.methodology.infrastructure.persistence.MongoUserRepository
 
 import java.util.UUID
 
 
 class CreateUserHandler(
-        private val userRepository: utn.methodology.domain.contracts.UserRepository
+        private val userRepository: MongoUserRepository
 ){
     fun handle(command: CreateUserCommand){
         val user = User(
@@ -15,10 +16,8 @@ class CreateUserHandler(
             command.nombre,
             command.userName,
             command.email,
-            command.contraseñia
+            command.contrasenia
         )
         userRepository.save(user)
     }
-
-
 }

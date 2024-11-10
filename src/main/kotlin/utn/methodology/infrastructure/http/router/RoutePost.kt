@@ -1,3 +1,7 @@
+import utn.methodology.application.view.ViewFollowedPosts
+import utn.methodology.domain.controllers.PostController
+import utn.methodology.infrastructure.http.actions.PostRepositoryImpl
+
 fun main() {
   val dataSource = ... // Configuración del DataSource
   val postRepository = PostRepositoryImpl(dataSource)

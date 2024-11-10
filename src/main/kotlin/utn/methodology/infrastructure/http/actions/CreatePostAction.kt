@@ -1,14 +1,24 @@
-package utn.methodology.domain.entities.Post
+package utn.methodology.infrastructure.http.actions
 
-import utn.Application.commands.CreatePostCommand
-import utn.Application.commandhandlers.CreatePostHandler
+import utn.methodology.application.commands.CreatePostCommand
+import utn.methodology.application.commandhandlers.CreatePostHandler
+import utn.methodology.infrastructure.http.dtos.CreatePostRequestBody
 
 class CreatePostAction(
     private val handler: CreatePostHandler
 ) {
-    fun execute(body: CreatePostCommand) {
+
+    fun execute(body: CreatePostRequestBody) {
+
         body.validate().let {
-            handler.handle(it)
+            val command = CreatePostCommand(
+                it.userId,
+                it.titulo,
+                it.contenido,
+                it.autor
+            )
+
+            handler.handle(command)
         }
     }
 }

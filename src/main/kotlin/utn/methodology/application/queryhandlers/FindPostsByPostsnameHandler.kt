@@ -1,17 +1,18 @@
 package utn.methodology.application.queryhandlers
 
+import io.ktor.server.plugins.*
 import utn.methodology.infrastructure.persistence.MongoPostRepository
-import utn.Application.queries.FindPostsByPostsnameQuery
+import utn.methodology.application.queries.FindPostsByPostsnameQuery
 
 class FindPostsByPostsnameHandler(
     private val postRepository: MongoPostRepository
 ) {
 
-    fun handle(query: FindPostsByPostsnameHandler): Map<String, String> {
-        val post = postRepository.findOne(query.Postname)
-        if (post == null) {
-            throw NotFoundException("Post with Postname: ${query.Postname} not found")
-        }
+    fun handle(query: FindPostsByPostsnameQuery): Map<String, Any> {
+
+        val post = postRepository.findOne(query.postname)
+            ?: throw NotFoundException("user with id: ${query.postname} not found")
+
         return post.toPrimitives()
     }
 }

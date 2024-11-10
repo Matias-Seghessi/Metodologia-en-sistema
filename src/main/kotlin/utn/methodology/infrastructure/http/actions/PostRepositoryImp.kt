@@ -1,7 +1,13 @@
+package utn.methodology.infrastructure.http.actions
+
+import utn.methodology.domain.contracts.PostRepository
+import utn.methodology.domain.entities.Post.Post
+import javax.sql.DataSource
+
 class PostRepositoryImpl(private val dataSource: DataSource) : PostRepository {
   override fun findPostsByFollowedUsers(userId: Long): List<Post> {
       val sql = """
-          SELECT p.post_id, p.user_id, p.content, p.publication_date
+          SELECT p.user_id, p.title, p.content, p.author, p.publication_date
           FROM posts p
           JOIN follows f ON p.user_id = f.followed_id
           WHERE f.follower_id = ?
@@ -15,10 +21,11 @@ class PostRepositoryImpl(private val dataSource: DataSource) : PostRepository {
       while (resultSet.next()) {
           posts.add(
               Post(
-                  postId = resultSet.getLong("post_id"),
-                  userId = resultSet.getLong("user_id"),
-                  content = resultSet.getString("content"),
-                  publicationDate = resultSet.getTimestamp("publication_date").toLocalDateTime()
+                  userId = resultSet.getLong("user_id").toString(),
+                  titulo = resultSet.getString("title"),
+                  contenido = resultSet.getString("content"),
+                  autor = resultSet.getString("author"),
+                  fechaCreacion = resultSet.getTimestamp("publication_date").toLocalDateTime()
               )
           )
       }

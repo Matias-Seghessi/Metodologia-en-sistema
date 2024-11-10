@@ -1,47 +1,37 @@
-package utn.methodology.domain.entities.post;
+package utn.methodology.infrastructure.http.router
 
-import utn.Application.commands.CreateUserCommand;
-import utn.Application.commandhandlers.CreateUserHandler;
-import utn.Application.infrastructure.http.actions.CreateUserAction;
-import utn.Application.infrastructure.persistence.MongoUserRepository;
-import utn.Application.infrastructure.persistence.Databases;
-import utn.methodology.infrastructure.http.actions.FindUserByUsernameAction
+import utn.methodology.application.commandhandlers.CreateUserHandler
+import utn.methodology.infrastructure.http.actions.CreateUserAction
+import utn.methodology.infrastructure.persistence.MongoUserRepository
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import utn.methodology.infrastructure.http.dtos.CreateUserRequestBody
+import utn.methodology.infrastructure.persistence.connectToMongoDB
+
 
 fun Application.userRouter() {
-    val mongoDatabase = Databases();
+    val mongoDatabase = connectToMongoDB()
     
-    val userMongoUserRepository = MongoUserRepository(Databases);
+    val userMongoUserRepository = MongoUserRepository(mongoDatabase)
     
-    val CreateUserAction = CreateUserAction(CreateUserHandler(userMongoUserRepository));
-    val findUserByUsernameAction = FindUserByUsernameAction(FindUserByUsernameHandler(userMongoUserRepository))
+    val createUserAction = CreateUserAction(CreateUserHandler(userMongoUserRepository))
     
     routing {
 
         post("/users") {
-            val body = call.receive<CreateUserCommand>();
-            createUserAction.execute(body);
+            val body = call.receive<CreateUserRequestBody>()
+            createUserAction.execute(body)
 
-            call.respond(HttpStatusCode.Created, mapOf("message" to "ok"));
+            call.respond(HttpStatusCode.Created, mapOf("message" to "ok"))
         }
 
         get("/users") {
-            val username = call.request.queryParameters["username"]
-            if (username.isNullOrBlank()) {
-                call.respond(HttpStatusCode.BadRequest)
-                return@get
-            }
-            else
-            {
-                val userQuery = SearchUserQuery(
-                    uuid = "unknown",
-                    nombre = "unknown",
-                    username = username,
-                    email = "unknown",
-                    contraseñia = "unknown"
-                )
+            val users = userMongoUserRepository.findAll()
 
-                FindUserByUsernameHandler.handleSearchUser(userQuery)
-            }
+            call.respond(HttpStatusCode.OK, users.map { it.toPrimitives() })
         }
     }
 }

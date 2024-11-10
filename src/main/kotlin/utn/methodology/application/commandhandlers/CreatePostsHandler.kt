@@ -1,6 +1,6 @@
 package utn.methodology.application.commandhandlers
 
-import utn.methodology.domain.entities.Post.Post
+import utn.methodology.domain.entities.Post
 import utn.methodology.infrastructure.persistence.MongoPostRepository
 import utn.methodology.application.commands.CreatePostCommand
 

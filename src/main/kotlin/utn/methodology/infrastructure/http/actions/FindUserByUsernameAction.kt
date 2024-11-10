@@ -1,13 +1,13 @@
-package utn.methodology.infrastructure.http.actions;
+package utn.methodology.infrastructure.http.actions
 
-import utn.Application.queries.FindUserByUsernameQuery;
-import utn.Application.queryhandlers.FindUserByUsernameHandler;
+import utn.methodology.application.queries.FindUserByUsernameQuery
+import utn.methodology.application.queryhandlers.FindUserByUsernameHandler
 
 class FindUserByUsernameAction(
     private val handler: FindUserByUsernameHandler
 ) {
 
-    fun execute(query: FindUserByUsernameQuery) {
+    fun execute(query: FindUserByUsernameQuery): Map<String, Any> {
         query
             .validate()
             .let {

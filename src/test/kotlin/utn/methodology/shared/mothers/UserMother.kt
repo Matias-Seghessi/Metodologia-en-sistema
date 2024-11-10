@@ -1,6 +1,6 @@
 package utn.methodology.shared.mothers
 
-import utn.methodology.domain.entities.User.User
+import utn.methodology.domain.entities.User
 import io.github.serpro69.kfaker.Faker
 import java.util.UUID
 

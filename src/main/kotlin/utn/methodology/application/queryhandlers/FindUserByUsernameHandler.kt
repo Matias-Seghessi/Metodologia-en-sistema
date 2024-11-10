@@ -1,18 +1,17 @@
 package utn.methodology.application.queryhandlers
 
+import io.ktor.server.plugins.*
 import utn.methodology.infrastructure.persistence.MongoUserRepository
-import utn.Application.queries.FindUserByUsernameQuery;
+import utn.methodology.application.queries.FindUserByUsernameQuery
+
 class FindUserByUsernameHandler(
     private val userRepository: MongoUserRepository
 ) {
 
-    fun handle(query: FindUserByUsernameQuery): Map<String, String> {
+    fun handle(query: FindUserByUsernameQuery): Map<String, Any> {
 
         val user = userRepository.findOne(query.username)
-
-        if (user == null) {
-            throw NotFoundException("user with username: ${query.username} not found")
-        }
+            ?: throw NotFoundException("user with username: ${query.username} not found")
 
         return user.toPrimitives()
     }

@@ -2,10 +2,8 @@ package utn.methodology.infrastructure.persistence
 
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
-import com.mongodb.client.model.UpdateOptions
 import org.bson.Document
 import utn.methodology.domain.entities.Post.Post
-import utn.methodology.domain.entities.Post
 import org.litote.kmongo.*
 
 class MongoPostRepository(private val database: MongoDatabase) {
@@ -15,7 +13,7 @@ class MongoPostRepository(private val database: MongoDatabase) {
 
     fun save(post: Post) {
         val document = Document().apply {
-            put("id", post.id.toString())
+            put("id", post.userId.toString())
             put("titulo", post.titulo)
             put("contenido", post.contenido)
             put("autor", post.autor)
@@ -23,8 +21,6 @@ class MongoPostRepository(private val database: MongoDatabase) {
         }
         collection.insertOne(document)
     }
-}
-class MongoPostRepository(private val database: MongoDatabase) {
 
     fun getPostsByUser(userId: Int, order: String, limit: Int, offset: Int): List<Post> {
         val collection = database.getMongoDatabase().getCollection<Post>("posts")
@@ -42,5 +38,23 @@ class MongoPostRepository(private val database: MongoDatabase) {
             .skip(offset)
             .limit(limit)
             .toList()
+    }
+
+    fun findOne(id: String): Post? {
+        val filter = Document("_id", id);
+
+        val primitives = collection.find(filter).firstOrNull() ?: return null;
+
+        return User.fromPrimitives(primitives as Map<String, Any>)
+    }
+
+    fun delete(post: Post) {
+        val filter = Document("_id", post.getId());
+
+        collection.deleteOne(filter)
+    }
+
+    interface MongoPostRepository {
+        fun findPostsByFollowedUsers(userId: Long): List<Post>
     }
 }

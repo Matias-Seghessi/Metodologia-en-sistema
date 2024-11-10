@@ -1,11 +1,11 @@
 package utn.methodology.application.queries
 
 data class FindPostsByPostsnameQuery(
-    val Postname: String
+    val postname: String
 ) {
 
     fun validate(): FindPostsByPostsnameQuery {
-        check(Postname.isNotEmpty()) { throw IllegalArgumentException("Postname must be defined") }
+        check(postname.isNotEmpty()) { throw IllegalArgumentException("Postname must be defined") }
         return this
     }
 }

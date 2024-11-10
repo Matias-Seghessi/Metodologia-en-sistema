@@ -1,7 +1,7 @@
 package utn.methodology.domain.controllers
 
 import org.springframework.web.bind.annotation.*
-import utn.methodology.domain.entities.User.User
+import utn.methodology.domain.entities.User
 import utn.methodology.domain.services.UserService
 
 @RestController
@@ -27,6 +27,6 @@ class UserController(private val userService: UserService) {
     // Simulación de la obtención de un usuario por UUID
     private fun getUserByUuid(uuid: UUID): User {
         // Aquí deberías conectar a la base de datos para obtener el usuario, pero por ahora lo simulamos:
-        return User(uuid = uuid, nombre = "Usuario $uuid", username = "usuario$uuid", email = "$uuid@correo.com", contraseñia = "123456")
+        return User(uuid = uuid, nombre = "Usuario $uuid", username = "usuario$uuid", email = "$uuid@correo.com", contrasenia = "123456")
     }
 }

@@ -1,23 +1,16 @@
 package utn.methodology.domain.entities.Post
 
-import utn.Application.commands.CreatePostCommand
-import utn.Application.commandhandlers.CreatePostHandler
-import utn.Application.infrastructure.http.actions.CreatePostAction
+import utn.methodology.application.commandhandlers.CreatePostHandler
+import utn.methodology.infrastructure.http.actions.CreatePostAction
 //----------------------------------------------
-import utn.Application.Commands.DeletePostCommand
-import utn.Application.Commandhandlers.DeletePostsHandler
-import utn.Application.infrastructure.http.actions.DeletePostAction
+import utn.methodology.application.commands.DeletePostCommand
+import utn.methodology.application.commandhandlers.DeletePostsHandler
+import utn.methodology.infrastructure.http.actions.DeletePostAction
 //----------------------------------------------
-import utn.Application.infrastructure.persistence.MongoPostRepository
-import utn.Application.infrastructure.persistence.Databases
-import utn.methodology.infrastructure.http.actions.FindUserByUsernameAction
-import utn.methodology.infrastructure.http.actions.PostRequest
-import utn.methodology.infrastructure.http.actions.Post
-import io.ktor.application.*
+import utn.methodology.infrastructure.persistence.MongoPostRepository
+import utn.methodology.infrastructure.http.dtos.CreatePostRequestBody
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.receive
-import io.ktor.response.respond
-import io.ktor.routing.*
+import io.ktor.server.application.*
 
 fun Application.postRout() {
     val mongoDatabase = Databases()
@@ -28,7 +21,7 @@ fun Application.postRout() {
     routing {
 
         post("/posts") {
-            val postRequest = call.receive<PostRequest>()
+            val postRequest = call.receive<CreatePostRequestBody>()
 
             if (postRequest.message.length > 280) {
                 call.respond(HttpStatusCode.BadRequest, "El mensaje no puede superar los 280 caracteres.")

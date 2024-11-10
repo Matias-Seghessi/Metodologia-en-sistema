@@ -1,11 +1,10 @@
 package utn.methodology.application.commands
 
 class DeletePostCommand(
-    val userId: String
+    val postId: String
 ) {
 
-    fun validate(): DeleteUserCommand{
-        checkNotNull(userId) {throw IllegalArgumentException("Id must be defined")}
+    fun validate(): DeletePostCommand {
         return this
     }
 }

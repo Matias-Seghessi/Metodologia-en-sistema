@@ -1,24 +1,20 @@
 package utn.methodology.application.commandhandlers
 
-import utn.methodology.domain.entities.Post.Post
+
+import io.ktor.server.plugins.*
 import utn.methodology.infrastructure.persistence.MongoPostRepository
 import utn.methodology.application.commands.DeletePostCommand
 
-import java.util.UUID
-
 class DeletePostsHandler(
-    private val PostRepository: MongoPostRepository
+    private val postRepository: MongoPostRepository
 ) {
 
-    fun handle(command: DeletePostsHandler) {
+    fun handle(command: DeletePostCommand) {
 
-        val post = PostRepository.findOne(command.id)
+        val post = postRepository.findOne(command.postId)
+            ?: throw NotFoundException ("not found user with id: ${command.postId}")
 
-        if (post == null) {
-            throw NotFoundException("not found user with id: ${command.id}")
-        }
-
-        PostRepository.delete(post);
+        postRepository.delete(post)
     }
 }
 

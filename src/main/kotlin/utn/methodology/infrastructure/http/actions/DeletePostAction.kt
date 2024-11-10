@@ -1,7 +1,7 @@
-package utn.methodology.domain.entities.Post
+package utn.methodology.infrastructure.http.actions
 
-import utn.Application.commands.DeletePostCommand
-import utn.Application.commandhandlers.DeletePostsHandler
+import utn.methodology.application.commands.DeletePostCommand
+import utn.methodology.application.commandhandlers.DeletePostsHandler
 
 class DeletePostAction(
     private val handler: DeletePostsHandler
