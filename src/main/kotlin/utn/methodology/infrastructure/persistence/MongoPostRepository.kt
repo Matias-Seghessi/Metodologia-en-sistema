@@ -53,8 +53,4 @@ class MongoPostRepository(private val database: MongoDatabase) {
 
         collection.deleteOne(filter)
     }
-
-    interface MongoPostRepository {
-        fun findPostsByFollowedUsers(userId: Long): List<Post>
-    }
 }

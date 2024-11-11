@@ -18,4 +18,19 @@ data class Post(
             "fechaCreacion" to fechaCreacion
         )
     }
+
+    companion object {
+        fun fromPrimitives(primitives: Map<String, Any>): User {
+
+            val post = Post(
+                primitives["userId"] as String,
+                primitives["titulo"] as String,
+                primitives["contenido"] as String,
+                primitives["autor"] as String,
+                primitives["fechaCreacion"] as LocalDateTime
+            )
+
+            return post
+        }
+    }
 }
